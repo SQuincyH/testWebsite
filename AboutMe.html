@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>About Me</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <style>
+        body {
+                background: url('https://c0.wallpaperflare.com/preview/258/870/538/brown-sparrows-perching-on-brown-bamboo.jpg') no-repeat fixed;
+                background-size: cover;
+            }
+
+        fieldset {
+            background-color: aliceblue;
+            border: 3px solid #992600;
+            margin: 8px 650px 8px 50px;
+            opacity: 0.5;
+        }
+
+        legend {
+            background-color: darkgrey;
+            font-style: oblique;
+            font-size: 22px;
+        }
+
+        label {
+            display: inline-block;
+            width: 130px;
+            text-align: -webkit-left;
+            border-color: #000;
+            font-style: oblique;
+            font-size: 18px;
+        }
+
+        .img-Prev {
+            width: 200px;
+            min-height: 100px;
+            border: 2px solid #992600; /* gives shape to box */
+            margin-top:  15px; /* spc bet box & parent*/
+
+            /* plcHldrTxt */
+            display: flex; /* expands items to fill free spc or contracts items to prevent overflow */
+            justify-content: center;
+            font-weight: bold;
+            color: #808080
+        }
+
+        .slider {
+            -webkit-appearance: none;
+            width: 50%;
+            height: 8px;
+            border-radius: 5px;
+            background: #b8860b;
+            outline: none; /* ? */
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none; /* nec */
+            background: #000;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%; /* the higher, the more rounded */
+            cursor: progress;
+        }
+
+        .slider::-moz-range-thumb {
+            background: #000;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%; /* the higher, the more rounded */
+            cursor: progress;
+        }
+
+        .smallSlider {
+            -webkit-appearance: none;
+            width: 100px;
+            height: 8px;
+            border-radius: 5px;
+            background: #b8860b;
+            outline: none;
+        }
+
+        .smallSlider::-webkit-slider-thumb {
+            -webkit-appearance: none; /* nec */
+            background: #000;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%; /* the higher, the more rounded */
+            cursor: progress;
+        }
+
+        .smallSlider::-moz-range-thumb {
+            background: #000;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%; /* the higher, the more rounded */
+            cursor: progress;
+        }
+
+        #submit {
+            margin: 15px 0px 25px 50px;
+            width: 80px; height: 25px;
+            background-color: #a9a9a9;
+            font-style: oblique;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <form method="post" name="x" action="form-submission.php">
+        <fieldset class="field_style">
+            <legend>Avatar</legend>
+
+            <input type="file" id="chooseFile" name="myFile" accept=image/*" onchange="prev_img(event)"><br />
+
+            <div class="img-Prev" id="imgPrev">
+                <img src="" alt="Image Preview" class="image-preview" style="display: none; width: 100px">
+                <span class="plcHldrTxt">Image Preview</span>
+            </div>
+
+            <Script>
+                function prev_img (event) {
+                    const reader = new FileReader();
+                    reader.onload = function() {
+                        let output = document.getElementsByClassName('image-preview');
+                        output.src = reader.result;
+                    }
+
+                    reader.readAsDataURL(event.target.files[0]);
+                }
+            </Script>
+            <!-- line 63 - img tag vs line 64 - img placeholder -->
+            <!-- the inline on line 63 i.e. display none, unless error and 100 width prevents img overflow -->
+            <!-- note:  inline event handlers are deprecated i.e. onEvent attributes... -->
+            <!-- ...instead, by way of js:  document.getElementById("select").addEventListener("change", getValue); ...-->
+            <!-- ...or by way of jQuery:  $("#select").change(getValue); -->
+        </fieldset>
+
+        <fieldset class="field_style">
+            <legend>General Details</legend>
+
+            <p> <label for="fullname"> Name:  </label>
+            <input type="text" id="fullname" name="fullname" placeholder="Your full name" /><br /> </p>
+
+            <p> Gender:
+            <input type="radio" id="gender1" name="gender1" />
+            <label for="gender1">Male</label>
+            <input type="radio" id="gender2" name="gender2" />
+            <label for="gender2">Female</label> </p>
+
+            <p> <label for="age"> Age:  </label>
+            <input type="text" id="age" name="age" /><br /> </p>
+
+            <p><label for="dobformat"> Date Of Birth:  </label>
+            <input type="text" id="dobformat" name="dobformat" placeholder="mm/dd/yyyy" /><br /> </p>
+
+            <p><label for="country"> Country:  </label>
+            <input type="text" id="country" name="country" /><br /> </p>
+        </fieldset>
+
+        <fieldset class="field_style">
+            <legend>Your Indicators</legend>
+
+            <div class="sliderContainer" style="width: 100%">
+
+                <label for="heightNum"> Height:  </label>
+                <input type="range" min="0" max="10" value="5" class="smallSlider" id="heightNum" />
+                <span id="displayHeightNumHere"></span>
+                <script>
+                    let retHeightNumPerInputTypeId = document.getElementById("heightNum");
+                    let outputHeightNum = document.getElementById("displayHeightNumHere");
+                    outputHeightNum.innerHTML = retHeightNumPerInputTypeId.value; /* set output = chosen val */
+
+                    retHeightNumPerInputTypeId.oninput = function() {
+                        outputHeightNum.innerHTML = this.value;
+                    }
+                </script>
+
+                <input type="range" min="0" max="30" value="15" class="smallSlider" id="cmNum" />
+                <span id="displayCmNumHere"></span><br>
+                <script>
+                    let retCmNumPerInputTypeId = document.getElementById("cmNum");
+                    let outputCmNum = document.getElementById("displayCmNumHere");
+                    outputCmNum.innerHTML = retCmNumPerInputTypeId.value; /* set output = chosen val */
+
+                    retCmNumPerInputTypeId.oninput = function() {
+                        outputCmNum.innerHTML = this.value;
+                    }
+                </script>
+
+
+                <label for="salaryNum"> Salary:  </label>
+                <input type="range" min="0" max="1000000" value="0" class="slider" id="salaryNum"/>
+                <span id="displaySalaryNumHere"></span>
+                <script>
+                    let retSalaryNumPerInputTypeId = document.getElementById("salaryNum");
+                    let outputSalaryNum = document.getElementById("displaySalaryNumHere");
+                    outputSalaryNum.innerHTML = retSalaryNumPerInputTypeId.value; /* set output = chosen val */
+
+                    retSalaryNumPerInputTypeId.oninput = function() {
+                        if(retSalaryNumPerInputTypeId.value > 0 && retSalaryNumPerInputTypeId.value <= 1000000) {
+                            let addCommas = retSalaryNumPerInputTypeId.value.toString();
+                            /* continue here */
+                            outputSalaryNum.innerHTML = this.value;
+                        }
+                    }
+                </script>
+            </div>
+        </fieldset>
+
+        <fieldset class="field_style">
+            <legend>Contact Information</legend>
+
+            <p> <label for="email"> Email:  </label>
+            <input type="text" id="email" name="email" /><br /> </p>
+
+            <p> <label for="mob"> Mobile:  </label>
+            <input type="text" id="mob" name="mob" /><br /> </p>
+
+            <div id="label">
+                <label for="addr"> Address:  </label>
+                <input type="text" style="height: 50px; width: 300px;" id="addr" name="addr" /><br />
+            </div><br>
+
+            <label for="contact"> Contact Method:  </label>
+            <label class="">
+                Email
+                <input type="checkbox">
+                <span class="checkmark"></span>
+            </label>
+            <label class="">
+                Whatsapp
+                <input type="checkbox">
+                <span class="checkmark"></span>
+            </label>
+        </fieldset>
+
+        <input type="submit" value="Submit" id="submit">
+    </form>
+</body>
+</html>
